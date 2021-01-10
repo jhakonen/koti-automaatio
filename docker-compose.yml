@@ -1,0 +1,93 @@
+version: '3.7'
+services:
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    restart: always
+    ports:
+      - "1883:1883" # Poista kun zigbee2mqtt ja node-red ovat konttien sisällä
+      - "8883:8883"
+      - "9091:9091"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+      - ./certificates:/mosquitto/config/certs:ro
+      - /etc/localtime:/etc/localtime:ro
+    user: "1000:1000"
+
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt
+    container_name: zigbee2mqtt
+    volumes:
+      - ./zigbee2mqtt:/app/data
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
+    restart: always
+    environment:
+      - TZ=Europe/Helsinki
+    depends_on:
+      - mosquitto
+
+  node-red:
+    image: nodered/node-red
+    container_name: node-red
+    restart: always
+    volumes:
+      - ./node-red:/data
+      - ./certificates:/etc/ssl/private:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "1880:1880"
+    depends_on:
+      - mosquitto
+
+  bt-mqtt-gateway:
+    image: zewelor/bt-mqtt-gateway
+    container_name: bt-mqtt-gateway
+    restart: always
+    volumes:
+      - ./bt-mqtt-gateway/config.yaml:/config.yaml
+      - ./certificates:/certificates:ro
+    # These capabilities are needed for Bluetooth
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+      - SYS_RESOURCE
+    # The Docker host should have working Bluetooth
+    network_mode: host
+    depends_on:
+      - mosquitto
+
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb
+    restart: always
+    volumes:
+      - ./influxdb/var:/var/lib/influxdb
+    ports:
+      - "8086:8086"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: always
+    volumes:
+      - ./grafana/etc/provisioning:/etc/grafana/provisioning
+      - ./grafana/lib:/var/lib/grafana
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    ports:
+      - "3000:3000"
+    depends_on:
+      - influxdb
+    user: "472"
+
+  telegraf:
+    image: telegraf
+    container_name: telegraf
+    restart: always
+    volumes:
+      - ./telegraf:/etc/telegraf
+    depends_on:
+      - influxdb
+      - mosquitto

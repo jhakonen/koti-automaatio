@@ -1,0 +1,34 @@
+homeassistant: false
+permit_join: true
+mqtt:
+  base_topic: zigbee2mqtt
+  server: 'mqtt://mosquitto'
+  # MQTT server authentication
+  user: koti
+  password: MQTT_PASSWORD
+serial:
+  port: /dev/ttyACM0
+devices:
+  '0x00158d00027a6155':
+    friendly_name: nappi1
+  '0x086bd7fffe5a78ee':
+    friendly_name: pistoke-tvtaso
+  '0x14b457fffe7e06cc':
+    friendly_name: tradfri-lamppu-1
+  '0x14b457fffe7e05ed':
+    friendly_name: tradfri-lamppu-2
+  '0xccccccfffe3c78b1':
+    friendly_name: tradfri-lamppu-3
+  '0x14b457fffe779423':
+    friendly_name: tradfri-kaukosaadin-1
+  '0x00124b000be8a277':
+    friendly_name: '0x00124b000be8a277'
+groups:
+  '25383':
+    friendly_name: olohuone-kattovalaisin
+    retain: false
+    devices:
+      - '0x14b457fffe7e06cc'
+      - '0x14b457fffe7e05ed'
+      - '0xccccccfffe3c78b1'
+

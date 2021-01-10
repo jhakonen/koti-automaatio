@@ -1,0 +1,16 @@
+{
+  "name": "node-red-project",
+  "description": "A Node-RED Project",
+  "version": "0.0.1",
+  "dependencies": {
+    "node-red-contrib-harmony-websocket": "^2.2.1",
+    "node-red-contrib-play-audio": "^2.4.0",
+    "node-red-dashboard": "^2.19.3",
+    "node-red-node-pi-gpio": "^1.0.6",
+    "node-red-node-ping": "^0.1.0",
+    "node-red-node-random": "^0.1.4",
+    "node-red-node-serialport": "^0.10.0",
+    "node-red-node-smooth": "^0.1.2",
+    "node-red-node-ui-list": "^0.2.5"
+  }
+}
