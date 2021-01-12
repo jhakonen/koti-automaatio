@@ -1,6 +1,12 @@
 bt-mqtt-gateway/config.yaml
 certificates/*.pem
 grafana/lib
+heimdall/keys/cert.crt
+heimdall/keys/cert.key
+heimdall/log 
+heimdall/nginx 
+heimdall/php 
+heimdall/www 
 influxdb/var
 mosquitto/config/passwords
 mosquitto/data

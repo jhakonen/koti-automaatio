@@ -91,3 +91,16 @@ services:
     depends_on:
       - influxdb
       - mosquitto
+
+  heimdall:
+    image: linuxserver/heimdall
+    container_name: heimdall
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Helsinki
+    volumes:
+      - ./heimdall:/config
+    ports:
+      - "443:443"

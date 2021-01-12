@@ -7,6 +7,7 @@ Tällä hetkellä hubissa on seuraavat palvelut:
 
 * bt-mqtt-gateway: Lukee RuuviTag sensorien mittausarvot käyttäen Bluetooth Low Energyä ja välittää MQTT:lle.
 * Grafana: Näyttää InfluxDB kannassa olevat RuuviTagien mittausarvot graaffisina kuvaajina.
+* Heimdall: Tarjoaa Dashboardin josta voi helposti käynnistää palveluiden webbi-käyttöliittymiä
 * InfluxDB: Tietokanta joka sisältää RuuviTagien mittausarvot.
 * Mosquitto: Välittää MQTT viestejä bt-mqtt-gateway, zigbee2mqtt, Node-RED ja Telegraf palveluiden välillä.
 * Node-RED: Varsinainen kotiautomaation aivot, kytkee eri sensorit ja painikkeet toisiinsa MQTT:n yli.
@@ -56,8 +57,12 @@ Luo TLS sertifikaatti:
 ```bash
 ./mkcert kota.koti kota
 cp kota.koti+1-key.pem certificates/key.pem
+cp kota.koti+1-key.pem heimdall/keys/cert.key 
 cp kota.koti+1.pem certificates/cert.pem
+cp kota.koti+1.pem heimdall/keys/cert.crt
 ```
+
+Lataa rootCA.pem tietokoneille ja mobiililaitteille ja aseta se CA sertifikaatti luotetuksi. 
 
 ### Luo asetustiedostot palveluille:
 ```bash
@@ -89,3 +94,9 @@ Lopuksi käynnistä palvelut uudelleen:
 ```bash
 docker-compose restart
 ```
+
+### Konfiguroi Heimdall
+1. Avaa webbiselaimeen osoite https://kota.koti/
+2. Aseta admin käyttäjän nimi ja salasana
+3. Lisää ohjelma Node-RED:lle (Title: NodeRed, URL: http://kota.koti:1880/)
+4. Lisää ohjelma Grafanalle (Title: Grafana, URL: http://kota.koti:3000/)
