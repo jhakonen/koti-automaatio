@@ -25,6 +25,7 @@ services:
     restart: always
     environment:
       - TZ=Europe/Helsinki
+      - ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD=${MQTT_PASSWORD}
     depends_on:
       - mosquitto
 
@@ -35,7 +36,7 @@ services:
     environment:
       - Z2MA_SETTINGS__MQTTSERVER=mosquitto
       - Z2MA_SETTINGS__MQTTUSERNAME=koti
-      - Z2MA_SETTINGS__MQTTPASSWORD # Luetaan .env tiedostosta
+      - Z2MA_SETTINGS__MQTTPASSWORD=${MQTT_PASSWORD}
       - TZ=Europe/Helsinki
     ports:
       - 8880:80

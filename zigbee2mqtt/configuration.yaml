@@ -5,7 +5,7 @@ mqtt:
   server: 'mqtt://mosquitto'
   # MQTT server authentication
   user: koti
-  password: MQTT_PASSWORD
+  # Password is provided via env variable
 serial:
   port: /dev/ttyACM0
 devices:

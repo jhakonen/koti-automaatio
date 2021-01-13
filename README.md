@@ -69,7 +69,6 @@ Lataa rootCA.pem tietokoneille ja mobiililaitteille ja aseta se CA sertifikaatti
 ```bash
 cp bt-mqtt-gateway/config.sample.yaml bt-mqtt-gateway/config.yaml
 cp telegraf/telegraf.sample.conf telegraf/telegraf.conf
-cp zigbee2mqtt/configuration.sample.yaml zigbee2mqtt/configuration.yaml
 ```
 
 ### Aseta Grafanan oikeudet:
@@ -89,11 +88,10 @@ docker exec -ti mosquitto /usr/bin/mosquitto_passwd -c /mosquitto/config/passwor
 Lisää antamasi salasana seuraaviin tiedostoihin:
 * bt-mqtt-gateway/config.yaml
 * telegraf/telegraf.conf
-* zigbee2mqtt/configuration.yaml
 
 Luo .env tiedosto ja lisää salasana siihen seuraavasti:
 ```bash
-Z2MA_SETTINGS__MQTTPASSWORD=<salasana>
+MQTT_PASSWORD=<salasana>
 ```
 
 Lopuksi käynnistä palvelut uudelleen:
