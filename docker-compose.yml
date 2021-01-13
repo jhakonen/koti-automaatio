@@ -5,7 +5,6 @@ services:
     container_name: mosquitto
     restart: always
     ports:
-      - "1883:1883" # Poista kun zigbee2mqtt ja node-red ovat konttien sisällä
       - "8883:8883"
       - "9091:9091"
     volumes:
@@ -26,6 +25,20 @@ services:
     restart: always
     environment:
       - TZ=Europe/Helsinki
+    depends_on:
+      - mosquitto
+
+  zigbee2mqttassistant:
+    image: carldebilly/zigbee2mqttassistant
+    container_name: zigbee2mqttassistant
+    restart: always
+    environment:
+      - Z2MA_SETTINGS__MQTTSERVER=mosquitto
+      - Z2MA_SETTINGS__MQTTUSERNAME=koti
+      - Z2MA_SETTINGS__MQTTPASSWORD # Luetaan .env tiedostosta
+      - TZ=Europe/Helsinki
+    ports:
+      - 8880:80
     depends_on:
       - mosquitto
 

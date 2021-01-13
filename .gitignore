@@ -1,3 +1,4 @@
+.env
 bt-mqtt-gateway/config.yaml
 certificates/*.pem
 grafana/lib

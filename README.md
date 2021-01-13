@@ -12,7 +12,8 @@ Tällä hetkellä hubissa on seuraavat palvelut:
 * Mosquitto: Välittää MQTT viestejä bt-mqtt-gateway, zigbee2mqtt, Node-RED ja Telegraf palveluiden välillä.
 * Node-RED: Varsinainen kotiautomaation aivot, kytkee eri sensorit ja painikkeet toisiinsa MQTT:n yli.
 * Telegraf: Kerää MQTT viestejä (RuuviTagien mittausarvot) ja tallentaa ne InfluxDB tietokantaan.
-* zigbee2mqtt: Välittää Zigbee protokollaa käyttävien etäohjattavien laitteiden viestejä MQTT:n.
+* Zigbee2Mqtt: Välittää Zigbee protokollaa käyttävien etäohjattavien laitteiden viestejä MQTT:n.
+* Zigbee2MqttAssistant: Webbikäyttöliittymä Zigbee2Mqtt:n ohjaamiseen.
 
 Projekti perustuu paljolti seuraaviin lähteisiin:
 
@@ -85,10 +86,15 @@ docker-compose up -d
 ```bash
 docker exec -ti mosquitto /usr/bin/mosquitto_passwd -c /mosquitto/config/passwords koti
 ```
-Lisää antamasi salasana myös seuraaviin tiedostoihin:
+Lisää antamasi salasana seuraaviin tiedostoihin:
 * bt-mqtt-gateway/config.yaml
 * telegraf/telegraf.conf
 * zigbee2mqtt/configuration.yaml
+
+Luo .env tiedosto ja lisää salasana siihen seuraavasti:
+```bash
+Z2MA_SETTINGS__MQTTPASSWORD=<salasana>
+```
 
 Lopuksi käynnistä palvelut uudelleen:
 ```bash
@@ -100,3 +106,4 @@ docker-compose restart
 2. Aseta admin käyttäjän nimi ja salasana
 3. Lisää ohjelma Node-RED:lle (Title: NodeRed, URL: http://kota.koti:1880/)
 4. Lisää ohjelma Grafanalle (Title: Grafana, URL: http://kota.koti:3000/)
+5. Lisää ohjelma Zigbee2MqttAssistantille (Title: Zigbee2MqttAssistant, App Type: None, URL: http://kota.koti:8880/, Logo: https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/images/logo.png)
