@@ -100,6 +100,8 @@ services:
     image: telegraf
     container_name: telegraf
     restart: always
+    environment:
+      - MQTT_PASSWORD
     volumes:
       - ./telegraf:/etc/telegraf
     depends_on:

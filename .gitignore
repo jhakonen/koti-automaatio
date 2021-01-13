@@ -16,7 +16,6 @@ node-red/.config*
 node-red/*.backup
 node-red/*_cred*
 node-red/node_modules
-telegraf/telegraf.conf
 zigbee2mqtt/database.db
 zigbee2mqtt/log
 zigbee2mqtt/state.json
