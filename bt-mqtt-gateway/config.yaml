@@ -2,7 +2,7 @@ mqtt:
   host: localhost
   port: 8883
   username: koti
-  password: MQTT_PASSWORD
+  password: $MQTT_PASSWORD
   ca_cert: /certificates/cert.pem
   ca_verify: False
   topic_prefix: bt-mqtt-gateway

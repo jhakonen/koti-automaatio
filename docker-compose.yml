@@ -60,9 +60,13 @@ services:
     image: zewelor/bt-mqtt-gateway
     container_name: bt-mqtt-gateway
     restart: always
+    entrypoint: ["/bin/sh", "-c", "/entrypoint.sh /config.yaml.in /config.yaml"]
     volumes:
-      - ./bt-mqtt-gateway/config.yaml:/config.yaml
+      - ./bt-mqtt-gateway/entrypoint.sh:/entrypoint.sh:ro
+      - ./bt-mqtt-gateway/config.yaml:/config.yaml.in:ro
       - ./certificates:/certificates:ro
+    environment:
+      - MQTT_PASSWORD
     # These capabilities are needed for Bluetooth
     cap_add:
       - NET_ADMIN

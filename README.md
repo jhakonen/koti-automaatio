@@ -65,11 +65,6 @@ cp kota.koti+1.pem heimdall/keys/cert.crt
 
 Lataa rootCA.pem tietokoneille ja mobiililaitteille ja aseta se CA sertifikaatti luotetuksi. 
 
-### Luo asetustiedosto bt-mqtt-gateway palvelulle:
-```bash
-cp bt-mqtt-gateway/config.sample.yaml bt-mqtt-gateway/config.yaml
-```
-
 ### Aseta Grafanan oikeudet:
 ```bash
 sudo chown -R 472:root grafana
@@ -84,8 +79,6 @@ docker-compose up -d
 ```bash
 docker exec -ti mosquitto /usr/bin/mosquitto_passwd -c /mosquitto/config/passwords koti
 ```
-
-Lisää antamasi salasana tiedostoon bt-mqtt-gateway/config.yaml.
 
 Luo .env tiedosto ja lisää salasana siihen seuraavasti:
 ```bash
