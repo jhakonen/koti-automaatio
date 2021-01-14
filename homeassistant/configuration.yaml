@@ -1,0 +1,17 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+http:
+  base_url: https://kota.koti:8123
+  ssl_certificate: /etc/ssl/private/cert.pem
+  ssl_key: /etc/ssl/private/key.pem
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml

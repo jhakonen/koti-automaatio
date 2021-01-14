@@ -7,6 +7,11 @@ heimdall/log
 heimdall/nginx 
 heimdall/php 
 heimdall/www 
+homeassistant/*.db*
+homeassistant/*.log
+homeassistant/.storage
+homeassistant/.HA_VERSION
+homeassistant/blueprints
 influxdb/var
 mosquitto/config/passwords
 mosquitto/data

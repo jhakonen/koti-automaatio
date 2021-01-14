@@ -8,9 +8,10 @@ Tällä hetkellä hubissa on seuraavat palvelut:
 * bt-mqtt-gateway: Lukee RuuviTag sensorien mittausarvot käyttäen Bluetooth Low Energyä ja välittää MQTT:lle.
 * Grafana: Näyttää InfluxDB kannassa olevat RuuviTagien mittausarvot graaffisina kuvaajina.
 * Heimdall: Tarjoaa Dashboardin josta voi helposti käynnistää palveluiden webbi-käyttöliittymiä
+* HomeAssistant: Kotiautomaation hallinta, kytkee eri sensorit ja painikkeet toisiinsa MQTT:n yli.
 * InfluxDB: Tietokanta joka sisältää RuuviTagien mittausarvot.
 * Mosquitto: Välittää MQTT viestejä bt-mqtt-gateway, zigbee2mqtt, Node-RED ja Telegraf palveluiden välillä.
-* Node-RED: Varsinainen kotiautomaation aivot, kytkee eri sensorit ja painikkeet toisiinsa MQTT:n yli.
+* Node-RED: Kotiautomaation hallinta, kytkee eri sensorit ja painikkeet toisiinsa MQTT:n yli.
 * Telegraf: Kerää MQTT viestejä (RuuviTagien mittausarvot) ja tallentaa ne InfluxDB tietokantaan.
 * Zigbee2Mqtt: Välittää Zigbee protokollaa käyttävien etäohjattavien laitteiden viestejä MQTT:n.
 * Zigbee2MqttAssistant: Webbikäyttöliittymä Zigbee2Mqtt:n ohjaamiseen.
@@ -52,6 +53,7 @@ Luo TLS CA sertifikaatti:
 ```bash
 ./mkcert -install
 cp ~/.local/share/mkcert/rootCA.pem certificates
+openssl x509 -inform PEM -outform DER -in certificates/rootCA.pem -out rootCA.crt
 ```
 
 Luo TLS sertifikaatti:
@@ -63,7 +65,8 @@ cp kota.koti+1.pem certificates/cert.pem
 cp kota.koti+1.pem heimdall/keys/cert.crt
 ```
 
-Lataa rootCA.pem tietokoneille ja mobiililaitteille ja aseta se CA sertifikaatti luotetuksi. 
+Lataa rootCA.pem ja rootCA.crt tietokoneille ja mobiililaitteille ja aseta CA sertifikaatti luotetuksi.
+PEM-päätteisen saa yleensä asennettua Linux ympäristöön, CRT-päätteinen tiedosto käy Androidiin asennukseen. 
 
 ### Aseta Grafanan oikeudet:
 ```bash
@@ -96,3 +99,15 @@ docker-compose restart
 3. Lisää ohjelma Node-RED:lle (Title: NodeRed, URL: http://kota.koti:1880/)
 4. Lisää ohjelma Grafanalle (Title: Grafana, URL: http://kota.koti:3000/)
 5. Lisää ohjelma Zigbee2MqttAssistantille (Title: Zigbee2MqttAssistant, App Type: None, URL: http://kota.koti:8880/, Logo: https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/images/logo.png)
+6. Lisää ohjelma HomeAssistantille (Title: HomeAssistant, URL: https://kota.koti:8123/)
+
+### Konfiguroi Node-RED
+1. Avaa Node-RED Heimdallista
+2. Avaa Dashboardista jokin MQTT node ja muokkaa MQTT brokerin asetuksia.
+3. Aseta MQTT:n käyttäjänimi (koti) ja salasana
+
+### Konfiguroi HomeAssistant
+1. Avaa HomeAssistant Heimdallista
+2. Luo pääkäyttäjä welhossa joka aukeaa ensimmäisenä
+3. HomeAssistantissa valitse Asetukset > Integraatiot > Lisää integraatio > MQTT > Syötä MQTT:n tiedot (Broker: mosquitto, username, ja password)
+

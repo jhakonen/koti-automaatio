@@ -112,6 +112,19 @@ services:
       - influxdb
       - mosquitto
 
+  homeassistant:
+    container_name: homeassistant
+    image: homeassistant/home-assistant:latest
+    restart: always
+    volumes:
+      - ./homeassistant:/config
+      - ./certificates:/etc/ssl/private:ro
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - mosquitto
+    ports:
+      - "8123:8123"
+
   heimdall:
     image: linuxserver/heimdall
     container_name: heimdall
