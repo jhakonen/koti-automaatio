@@ -11,6 +11,12 @@ http:
   ssl_certificate: /etc/ssl/private/cert.pem
   ssl_key: /etc/ssl/private/key.pem
 
+mqtt:
+  broker: mosquitto
+  port: 1883
+  username: koti
+  password: !env_var MQTT_PASSWORD
+
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml

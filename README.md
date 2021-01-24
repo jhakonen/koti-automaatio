@@ -73,24 +73,14 @@ PEM-päätteisen saa yleensä asennettua Linux ympäristöön, CRT-päätteinen 
 sudo chown -R 472:root grafana
 ```
 
+### Aseta MQTT salasana
+```bash
+echo "<salasana>" > secrets/MQTT_PASSWORD
+```
+
 ### Käynnistä ympäristö:
 ```bash
 docker-compose up -d
-```
-
-### Luo salasana MQTT palvelulle:
-```bash
-docker exec -ti mosquitto /usr/bin/mosquitto_passwd -c /mosquitto/config/passwords koti
-```
-
-Luo .env tiedosto ja lisää salasana siihen seuraavasti:
-```bash
-MQTT_PASSWORD=<salasana>
-```
-
-Lopuksi käynnistä palvelut uudelleen:
-```bash
-docker-compose restart
 ```
 
 ### Konfiguroi Heimdall
@@ -100,14 +90,3 @@ docker-compose restart
 4. Lisää ohjelma Grafanalle (Title: Grafana, URL: http://kota.koti:3000/)
 5. Lisää ohjelma Zigbee2MqttAssistantille (Title: Zigbee2MqttAssistant, App Type: None, URL: http://kota.koti:8880/, Logo: https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/images/logo.png)
 6. Lisää ohjelma HomeAssistantille (Title: HomeAssistant, URL: https://kota.koti:8123/)
-
-### Konfiguroi Node-RED
-1. Avaa Node-RED Heimdallista
-2. Avaa Dashboardista jokin MQTT node ja muokkaa MQTT brokerin asetuksia.
-3. Aseta MQTT:n käyttäjänimi (koti) ja salasana
-
-### Konfiguroi HomeAssistant
-1. Avaa HomeAssistant Heimdallista
-2. Luo pääkäyttäjä welhossa joka aukeaa ensimmäisenä
-3. HomeAssistantissa valitse Asetukset > Integraatiot > Lisää integraatio > MQTT > Syötä MQTT:n tiedot (Broker: mosquitto, username, ja password)
-

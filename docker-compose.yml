@@ -4,28 +4,35 @@ services:
     image: eclipse-mosquitto
     container_name: mosquitto
     restart: always
+    entrypoint: /kota-entrypoint.sh
     ports:
       - "8883:8883"
       - "9091:9091"
     volumes:
+      - ./mosquitto/kota-entrypoint.sh:/kota-entrypoint.sh:ro
       - ./mosquitto/config:/mosquitto/config
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
       - ./certificates:/mosquitto/config/certs:ro
       - /etc/localtime:/etc/localtime:ro
+    secrets:
+      - MQTT_PASSWORD
     user: "1000:1000"
 
   zigbee2mqtt:
     image: koenkk/zigbee2mqtt
     container_name: zigbee2mqtt
-    volumes:
-      - ./zigbee2mqtt:/app/data
-    devices:
-      - /dev/ttyACM0:/dev/ttyACM0
     restart: always
+    entrypoint: /kota-entrypoint.sh
+    volumes:
+      - ./zigbee2mqtt/kota-entrypoint.sh:/kota-entrypoint.sh:ro
+      - ./zigbee2mqtt/data:/app/data
+    secrets:
+      - MQTT_PASSWORD
     environment:
       - TZ=Europe/Helsinki
-      - ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD=${MQTT_PASSWORD}
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
     depends_on:
       - mosquitto
 
@@ -33,10 +40,14 @@ services:
     image: carldebilly/zigbee2mqttassistant
     container_name: zigbee2mqttassistant
     restart: always
+    entrypoint: /kota-entrypoint.sh
+    volumes:
+      - ./zigbee2mqttassistant/kota-entrypoint.sh:/kota-entrypoint.sh:ro
+    secrets:
+      - MQTT_PASSWORD
     environment:
       - Z2MA_SETTINGS__MQTTSERVER=mosquitto
       - Z2MA_SETTINGS__MQTTUSERNAME=koti
-      - Z2MA_SETTINGS__MQTTPASSWORD=${MQTT_PASSWORD}
       - TZ=Europe/Helsinki
     ports:
       - 8880:80
@@ -47,10 +58,14 @@ services:
     image: nodered/node-red
     container_name: node-red
     restart: always
+    entrypoint: /kota-entrypoint.sh
     volumes:
-      - ./node-red:/data
+      - ./node-red/kota-entrypoint.sh:/kota-entrypoint.sh:ro
+      - ./node-red/data:/data
       - ./certificates:/etc/ssl/private:ro
       - /etc/localtime:/etc/localtime:ro
+    secrets:
+      - MQTT_PASSWORD
     ports:
       - "1880:1880"
     depends_on:
@@ -60,12 +75,12 @@ services:
     image: zewelor/bt-mqtt-gateway
     container_name: bt-mqtt-gateway
     restart: always
-    entrypoint: ["/bin/sh", "-c", "/entrypoint.sh /config.yaml.in /config.yaml"]
+    entrypoint: /kota-entrypoint.sh
     volumes:
-      - ./bt-mqtt-gateway/entrypoint.sh:/entrypoint.sh:ro
-      - ./bt-mqtt-gateway/config.yaml:/config.yaml.in:ro
+      - ./bt-mqtt-gateway/kota-entrypoint.sh:/kota-entrypoint.sh:ro
+      - ./bt-mqtt-gateway/config.yaml.in:/config.yaml.in:ro
       - ./certificates:/certificates:ro
-    environment:
+    secrets:
       - MQTT_PASSWORD
     # These capabilities are needed for Bluetooth
     cap_add:
@@ -104,10 +119,12 @@ services:
     image: telegraf
     container_name: telegraf
     restart: always
-    environment:
+    entrypoint: /kota-entrypoint.sh
+    secrets:
       - MQTT_PASSWORD
     volumes:
-      - ./telegraf:/etc/telegraf
+      - ./telegraf/kota-entrypoint.sh:/kota-entrypoint.sh:ro
+      - ./telegraf/config:/etc/telegraf
     depends_on:
       - influxdb
       - mosquitto
@@ -116,10 +133,14 @@ services:
     container_name: homeassistant
     image: homeassistant/home-assistant:latest
     restart: always
+    entrypoint: /kota-entrypoint.sh
     volumes:
-      - ./homeassistant:/config
+      - ./homeassistant/config:/config
+      - ./homeassistant/kota-entrypoint.sh:/kota-entrypoint.sh:ro
       - ./certificates:/etc/ssl/private:ro
       - /etc/localtime:/etc/localtime:ro
+    secrets:
+      - MQTT_PASSWORD
     depends_on:
       - mosquitto
     ports:
@@ -137,3 +158,7 @@ services:
       - ./heimdall:/config
     ports:
       - "443:443"
+
+secrets:
+  MQTT_PASSWORD:
+    file: ./secrets/MQTT_PASSWORD
