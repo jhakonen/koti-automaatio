@@ -6,29 +6,39 @@ mqtt:
   # MQTT server authentication
   user: koti
   # Password is provided via env variable
+advanced:
+  # Ilmoita Ikean lamppujen tila kun niitä ohjataan Ikean himmentimellä,
+  # tarvitaan jotta Home Assistant pysyy kärryillä lamppujen oikeasta
+  # tilasta.
+  report: true
 serial:
   port: /dev/ttyACM0
 devices:
   '0x00158d00027a6155':
     friendly_name: nappi1
+    # Retain tarvitaan jotta Home Assistant näkee laitteen tilan palvelun
+    # uudelleenkäynnistyksen jälkeen
+    retain: true
   '0x086bd7fffe5a78ee':
     friendly_name: pistoke-tvtaso
+    retain: true
   '0x14b457fffe7e06cc':
     friendly_name: tradfri-lamppu-1
+    retain: true
   '0x14b457fffe7e05ed':
     friendly_name: tradfri-lamppu-2
+    retain: true
   '0xccccccfffe3c78b1':
     friendly_name: tradfri-lamppu-3
+    retain: true
   '0x14b457fffe779423':
     friendly_name: tradfri-kaukosaadin-1
-  '0x00124b000be8a277':
-    friendly_name: '0x00124b000be8a277'
+    retain: true
 groups:
   '25383':
     friendly_name: olohuone-kattovalaisin
-    retain: false
+    retain: true
     devices:
       - '0x14b457fffe7e06cc'
       - '0x14b457fffe7e05ed'
       - '0xccccccfffe3c78b1'
-
