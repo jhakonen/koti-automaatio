@@ -131,12 +131,17 @@ services:
 
   homeassistant:
     container_name: homeassistant
-    image: homeassistant/home-assistant:latest
+    image: homeassistant/home-assistant:stable
     restart: always
     entrypoint: /kota-entrypoint.sh
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Helsinki
     volumes:
       - ./homeassistant/config:/config
       - ./homeassistant/kota-entrypoint.sh:/kota-entrypoint.sh:ro
+      - ./homeassistant/docker-venv/run:/etc/services.d/home-assistant/run
       - ./certificates:/etc/ssl/private:ro
       - /etc/localtime:/etc/localtime:ro
     secrets:
