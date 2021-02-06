@@ -68,7 +68,18 @@ cp kota.koti+1.pem heimdall/keys/cert.crt
 Lataa rootCA.pem ja rootCA.crt tietokoneille ja mobiililaitteille ja aseta CA sertifikaatti luotetuksi.
 PEM-päätteisen saa yleensä asennettua Linux ympäristöön, CRT-päätteinen tiedosto käy Androidiin asennukseen. 
 
-### Aseta Grafanan oikeudet:
+### Luo hakemistot
+```bash
+mkdir -p \
+  mosquitto/config \
+  mosquitto/data \
+  mosquitto/log \
+  influxdb/var \
+  homeassistant/config
+
+```
+
+### Aseta hakemistojen käyttöoikeudet oikeudet:
 ```bash
 sudo chown -R 472:root grafana
 ```

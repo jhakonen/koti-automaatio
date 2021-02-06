@@ -100,6 +100,7 @@ services:
       - ./influxdb/var:/var/lib/influxdb
     ports:
       - "8086:8086"
+    user: "1000:1000"
 
   grafana:
     image: grafana/grafana
