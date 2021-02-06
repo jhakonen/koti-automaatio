@@ -101,3 +101,23 @@ docker-compose up -d
 4. Lisää ohjelma Grafanalle (Title: Grafana, URL: http://kota.koti:3000/)
 5. Lisää ohjelma Zigbee2MqttAssistantille (Title: Zigbee2MqttAssistant, App Type: None, URL: http://kota.koti:8880/, Logo: https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/images/logo.png)
 6. Lisää ohjelma HomeAssistantille (Title: HomeAssistant, URL: https://kota.koti:8123/)
+
+## Varmuuskopiointi
+
+Asenna Borg Backup ohjelmistot:
+```bash
+sudo apt install borg borgmatic
+```
+
+Kokeile että varmuuskopiointi toimii:
+```bash
+~/koti-automaatio/borgmatic/run-backup.sh <repo salasana>
+```
+
+Lisää varmuuskopiointi crontabiin:
+```bash
+crontab -e
+```
+```crontab
+0 0 * * * ~/koti-automaatio/borgmatic/run-backup.sh <repo salasana>
+```
