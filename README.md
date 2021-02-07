@@ -71,17 +71,15 @@ PEM-päätteisen saa yleensä asennettua Linux ympäristöön, CRT-päätteinen 
 ### Luo hakemistot
 ```bash
 mkdir -p \
+  grafana/etc/provisioning \
+  grafana/lib \
+  grafana/dashboards \
   mosquitto/config \
   mosquitto/data \
   mosquitto/log \
   influxdb/var \
   homeassistant/config
 
-```
-
-### Aseta hakemistojen käyttöoikeudet oikeudet:
-```bash
-sudo chown -R 472:root grafana
 ```
 
 ### Aseta MQTT salasana

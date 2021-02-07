@@ -114,7 +114,7 @@ services:
       - "3000:3000"
     depends_on:
       - influxdb
-    user: "472"
+    user: "1000:1000"
 
   telegraf:
     image: telegraf
