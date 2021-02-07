@@ -107,9 +107,14 @@ Asenna Borg Backup ohjelmistot:
 sudo apt install borg borgmatic
 ```
 
+Aseta Borgbasen repon salasana:
+```bash
+echo "<repo salasana>" > secrets/BORG_PASSPHRASE
+```
+
 Kokeile että varmuuskopiointi toimii:
 ```bash
-~/koti-automaatio/borgmatic/run-backup.sh <repo salasana>
+~/koti-automaatio/borgmatic/run-backup.sh
 ```
 
 Lisää varmuuskopiointi crontabiin:
@@ -117,5 +122,5 @@ Lisää varmuuskopiointi crontabiin:
 crontab -e
 ```
 ```crontab
-0 0 * * * ~/koti-automaatio/borgmatic/run-backup.sh <repo salasana>
+0 0 * * * ~/koti-automaatio/borgmatic/run-backup.sh
 ```

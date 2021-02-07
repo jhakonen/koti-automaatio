@@ -1,7 +1,7 @@
 #!/bin/bash
-export BORG_PASSPHRASE="$1"
-
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+
 cd "$SCRIPT_DIR/.."
 
+export BORG_PASSPHRASE="$(cat secrets/BORG_PASSPHRASE)"
 borgmatic -c borgmatic -v 2
