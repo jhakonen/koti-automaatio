@@ -102,6 +102,8 @@ docker-compose up -d
 
 ## Varmuuskopiointi
 
+### Asennus
+
 Asenna Borg Backup ohjelmistot:
 ```bash
 sudo apt install borg borgmatic
@@ -123,4 +125,19 @@ crontab -e
 ```
 ```crontab
 0 0 * * * ~/koti-automaatio/borgmatic/run-backup.sh
+```
+
+### Varmuuskopion mounttaus
+
+```bash
+mkdir ~/borg-mount
+BORG_PASSPHRASE="$(cat secrets/BORG_PASSPHRASE)" \
+  borg mount aujs7j2m@aujs7j2m.repo.borgbase.com:repo ~/borg-mount
+ll ~/borg-mount/
+```
+
+### Varmuuskopion unmounttaus
+
+```bash
+borg umount ~/borg-mount
 ```
