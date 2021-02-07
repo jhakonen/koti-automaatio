@@ -71,6 +71,7 @@ services:
       - "1880:1880"
     depends_on:
       - mosquitto
+    user: "1000:1000"
 
   bt-mqtt-gateway:
     image: zewelor/bt-mqtt-gateway
