@@ -53,6 +53,7 @@ services:
       - 8880:80
     depends_on:
       - mosquitto
+    user: "1000:1000"
 
   node-red:
     image: nodered/node-red
