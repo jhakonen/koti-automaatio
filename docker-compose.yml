@@ -35,6 +35,8 @@ services:
       - /dev/ttyACM0:/dev/ttyACM0
     depends_on:
       - mosquitto
+    # /dev/ttyACM0 laitteen käyttö vaatii dialout ryhmän
+    user: "1000:dialout"
 
   zigbee2mqttassistant:
     image: carldebilly/zigbee2mqttassistant
