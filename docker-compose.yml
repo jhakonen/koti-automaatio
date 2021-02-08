@@ -170,6 +170,22 @@ services:
     ports:
       - "443:443"
 
+  harmony-api:
+    image: chrisns/harmony-api:sha-ac853377fd9ef2d6baf0e0361da6ac47550967e7
+    container_name: harmony-api
+    restart: always
+    entrypoint: /kota-entrypoint.sh
+    volumes:
+      - ./harmony-api/config.js:/config.js:ro
+      - ./harmony-api/kota-entrypoint.sh:/kota-entrypoint.sh:ro
+    secrets:
+      - MQTT_PASSWORD
+    ports:
+      - "8282:8282"
+    depends_on:
+      - mosquitto
+    user: "1000:1000"
+
 secrets:
   MQTT_PASSWORD:
     file: ./secrets/MQTT_PASSWORD
