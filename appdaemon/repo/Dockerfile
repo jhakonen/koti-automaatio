@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM python:3.8-alpine3.13
 
 # Environment vars we can configure against
 # But these are optional, so we won't define them now
@@ -22,8 +22,9 @@ COPY . .
 RUN apk add tzdata
 
 # Install dependencies
-RUN apk add --no-cache gcc libffi-dev openssl-dev musl-dev \
-    && pip install --no-cache-dir .
+RUN apk add --no-cache gcc libffi-dev openssl-dev musl-dev cargo
+RUN pip install --no-cache-dir .
+
 # Install additional packages
 RUN apk add --no-cache curl
 

@@ -186,6 +186,18 @@ services:
       - mosquitto
     user: "1000:1000"
 
+  appdaemon:
+    build: ./appdaemon/repo
+    container_name: appdaemon
+    restart: always
+    entrypoint: /kota-entrypoint.sh
+    volumes:
+      - ./appdaemon/conf:/conf
+      - ./appdaemon/kota-entrypoint.sh:/kota-entrypoint.sh:ro
+    secrets:
+      - MQTT_PASSWORD
+    user: "1000:1000"
+
 secrets:
   MQTT_PASSWORD:
     file: ./secrets/MQTT_PASSWORD

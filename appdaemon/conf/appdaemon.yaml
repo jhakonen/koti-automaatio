@@ -1,0 +1,13 @@
+secrets: /tmp/secrets.yaml
+appdaemon:
+  time_zone: Europe/Helsinki
+  latitude: 0
+  longitude: 0
+  elevation: 0
+  plugins:
+    MQTT:
+      type: mqtt
+      client_host: mosquitto
+      namespace: mqtt
+      client_user: koti
+      client_password: !secret MQTT_PASSWORD
