@@ -1,4 +1,6 @@
 .env
+__pycache__
+appdaemon/conf/dashboards
 certificates/*.pem
 grafana/lib
 heimdall/keys/cert.crt

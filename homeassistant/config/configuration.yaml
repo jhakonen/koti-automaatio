@@ -21,13 +21,3 @@ group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
-
-sensor:
-  - friendly_name: Harmony Hub - Nykyinen Aktiviteetti
-    name: harmony_hub_current_activity
-    platform: mqtt
-    state_topic: harmony-api/hubs/olohuone-v2/current_activity
-  - friendly_name: Harmony Hub - Tila
-    name: harmony_hub_state
-    platform: mqtt
-    state_topic: harmony-api/hubs/olohuone-v2/state

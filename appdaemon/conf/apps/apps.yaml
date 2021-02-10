@@ -1,0 +1,5 @@
+harmony_api:
+  module: harmony_api
+  class: HarmonyAPI
+  harmony_api_host: harmony-api
+  harmony_api_port: 8282
