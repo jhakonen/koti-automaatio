@@ -15,7 +15,7 @@ mqtt:
   broker: mosquitto
   port: 1883
   username: koti
-  password: !env_var MQTT_PASSWORD
+  password: !include /run/secrets/MQTT_PASSWORD
 
 group: !include groups.yaml
 automation: !include automations.yaml
