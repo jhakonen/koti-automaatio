@@ -16,7 +16,14 @@
 
 // The `https` setting requires the `fs` module. Uncomment the following
 // to make it available:
-//var fs = require("fs");
+var fs = require("fs");
+
+// Lue Docker salaisuudet ja lisää ne ympäristömuuttujiin jotta niitä voi
+// käyttää flow tiedostoissa
+fs.readdirSync('/run/secrets').map((fileName) => {
+    const content = fs.readFileSync(`/run/secrets/${fileName}`, 'utf8');
+    process.env[fileName] = content;
+});
 
 module.exports = {
     // the tcp port that the Node-RED web server is listening on

@@ -61,9 +61,7 @@ services:
     image: nodered/node-red
     container_name: node-red
     restart: always
-    entrypoint: /kota-entrypoint.sh
     volumes:
-      - ./node-red/kota-entrypoint.sh:/kota-entrypoint.sh:ro
       - ./node-red/data:/data
       - ./certificates:/etc/ssl/private:ro
       - /etc/localtime:/etc/localtime:ro
