@@ -1,1 +1,14 @@
-[]
+- id: '1613069072024'
+  alias: Ilmoita kun saunassa on sopivan lämmintä
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.ruuvitag_sauna_temperature
+    above: input_number.sopiva_saunan_lampotila
+  condition: []
+  action:
+  - service: mqtt.publish
+    data:
+      topic: mqttwarn/telegram
+      payload: Hei! Saunassa olisi nyt sopivan lämmintä, sinne voisi mennä.
+  mode: single

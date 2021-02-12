@@ -196,6 +196,28 @@ services:
       - MQTT_PASSWORD
     user: "1000:1000"
 
+  mqttwarn:
+    image: jhakonen/mqttwarn
+    container_name: mqttwarn
+    restart: always
+    entrypoint: /kota-entrypoint.sh
+    volumes:
+      - ./mqttwarn/config:/etc/mqttwarn
+      - ./mqttwarn/env-korvaa.py:/env-korvaa.py:ro
+      - ./mqttwarn/kota-entrypoint.sh:/kota-entrypoint.sh:ro
+      - /etc/localtime:/etc/localtime:ro
+    secrets:
+      - MQTT_PASSWORD
+      - TELEGRAM_CHAT_ID
+      - TELEGRAM_TOKEN
+    depends_on:
+      - mosquitto
+    user: "1000:1000"
+
 secrets:
   MQTT_PASSWORD:
     file: ./secrets/MQTT_PASSWORD
+  TELEGRAM_CHAT_ID:
+    file: ./secrets/TELEGRAM_CHAT_ID
+  TELEGRAM_TOKEN:
+    file: ./secrets/TELEGRAM_TOKEN
