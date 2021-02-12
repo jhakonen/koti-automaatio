@@ -5,12 +5,15 @@ Zigbee / Bluetooth hubi joka mahdollistaa kodin automatisoinnin.
 
 Tällä hetkellä hubissa on seuraavat palvelut:
 
+* AppDaemon: Kuuntelee MQTT viestejä ja välittää niitä python skripteille.
 * bt-mqtt-gateway: Lukee RuuviTag sensorien mittausarvot käyttäen Bluetooth Low Energyä ja välittää MQTT:lle.
 * Grafana: Näyttää InfluxDB kannassa olevat RuuviTagien mittausarvot graaffisina kuvaajina.
+* harmony-api: Välittää viestejä MQTT:n ja Logitech Harmony Hubin välillä.
 * Heimdall: Tarjoaa Dashboardin josta voi helposti käynnistää palveluiden webbi-käyttöliittymiä
 * HomeAssistant: Kotiautomaation hallinta, kytkee eri sensorit ja painikkeet toisiinsa MQTT:n yli.
 * InfluxDB: Tietokanta joka sisältää RuuviTagien mittausarvot.
 * Mosquitto: Välittää MQTT viestejä bt-mqtt-gateway, zigbee2mqtt, Node-RED ja Telegraf palveluiden välillä.
+* mqttwarn: Vastaanottaa MQTT viestejä ja lähettää niitä käyttäjälle Telegramin yli.
 * Node-RED: Kotiautomaation hallinta, kytkee eri sensorit ja painikkeet toisiinsa MQTT:n yli.
 * Telegraf: Kerää MQTT viestejä (RuuviTagien mittausarvot) ja tallentaa ne InfluxDB tietokantaan.
 * Zigbee2Mqtt: Välittää Zigbee protokollaa käyttävien etäohjattavien laitteiden viestejä MQTT:n.
@@ -33,6 +36,7 @@ Projekti perustuu paljolti seuraaviin lähteisiin:
 * Trådfri lamppu x3 (zigbee)
 * Trådfri painike/himmennin (zigbee)
 * RuuviTag sensorit x2 (bluetooth)
+* Logitech Harmony Hub
 
 ## Asennus
 
@@ -82,9 +86,11 @@ mkdir -p \
 
 ```
 
-### Aseta MQTT salasana
+### Aseta salaisuudet
 ```bash
-echo "<salasana>" > secrets/MQTT_PASSWORD
+echo "<MQTT salasana>" > secrets/MQTT_PASSWORD
+echo "<Telegram chat id>" > secrets/TELEGRAM_CHAT_ID
+echo "<Telegram bot token>" > secrets/TELEGRAM_TOKEN
 ```
 
 ### Käynnistä ympäristö:
