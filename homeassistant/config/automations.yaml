@@ -12,3 +12,18 @@
       topic: mqttwarn/telegram
       payload: Hei! Saunassa olisi nyt sopivan lämmintä, sinne voisi mennä.
   mode: single
+- id: '1613170496171'
+  alias: Ilmoita kun ilmankosteus on liian matala
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.ruuvitag_makuuhuone_humidity
+    below: input_number.ilmankosteuden_raja_arvo
+  condition: []
+  action:
+  - service: mqtt.publish
+    data:
+      topic: mqttwarn/telegram
+      payload: Sisäilman ilmankosteus on liian matala, ilmankostutin kannattaa laittaa
+        päälle.
+  mode: single
