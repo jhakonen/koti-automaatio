@@ -93,6 +93,12 @@ echo "<Telegram chat id>" > secrets/TELEGRAM_CHAT_ID
 echo "<Telegram bot token>" > secrets/TELEGRAM_TOKEN
 ```
 
+### Luo SSH avain node-red palvelua varten
+```bash
+ssh-keygen -f ~/.ssh/id_node_red
+cat .ssh/id_node_red.pub >> .ssh/authorized_keys
+```
+
 ### Käynnistä ympäristö:
 ```bash
 docker-compose up -d
