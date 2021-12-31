@@ -19,6 +19,7 @@
   - platform: numeric_state
     entity_id: sensor.ruuvitag_makuuhuone_humidity
     below: input_number.ilmankosteuden_raja_arvo
+    for: 00:30:00
   condition: []
   action:
   - service: mqtt.publish
