@@ -1,3 +1,9 @@
+entsoe:
+  module: entsoe
+  class: Entsoe
+  domain: 10YFI-1--------U
+  token: !secret ENTSOE_API_TOKEN
+
 harmony_api:
   module: harmony_api
   class: HarmonyAPI

@@ -186,7 +186,7 @@ services:
     user: "1000:1000"
 
   appdaemon:
-    build: ./appdaemon/repo
+    image: acockburn/appdaemon:latest
     container_name: appdaemon
     restart: always
     entrypoint: /kota-entrypoint.sh
@@ -194,8 +194,8 @@ services:
       - ./appdaemon/conf:/conf
       - ./appdaemon/kota-entrypoint.sh:/kota-entrypoint.sh:ro
     secrets:
+      - ENTSOE_API_TOKEN
       - MQTT_PASSWORD
-    user: "1000:1000"
 
   mqttwarn:
     image: jhakonen/mqttwarn
@@ -216,6 +216,8 @@ services:
     user: "1000:1000"
 
 secrets:
+  ENTSOE_API_TOKEN:
+    file: ./secrets/ENTSOE_API_TOKEN
   MQTT_PASSWORD:
     file: ./secrets/MQTT_PASSWORD
   TELEGRAM_CHAT_ID:
