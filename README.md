@@ -88,7 +88,13 @@ mkdir -p \
 
 ### Aseta salaisuudet
 ```bash
+echo "<Borg varmuuskopioinnin salalause>" > secrets/BORG_PASSPHRASE
+echo "<ENTSO-E API avain>" > secrets/ENTSOE_API_TOKEN
 echo "<MQTT salasana>" > secrets/MQTT_PASSWORD
+echo "<SMTP käyttäjänimi>" > secrets/SMTP_USERNAME
+echo "<SMTP salasana>" > secrets/SMTP_PASSWORD
+echo "<SMTP lähettäjän nimi>" > secrets/SMTP_FROM
+echo "<SMTP vastaanottajan nimi>" > secrets/SMTP_TO
 echo "<Telegram chat id>" > secrets/TELEGRAM_CHAT_ID
 echo "<Telegram bot token>" > secrets/TELEGRAM_TOKEN
 ```

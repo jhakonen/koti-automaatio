@@ -198,17 +198,21 @@ services:
       - MQTT_PASSWORD
 
   mqttwarn:
-    image: jhakonen/mqttwarn
+    image: ghcr.io/jpmens/mqttwarn-full:latest
     container_name: mqttwarn
     restart: always
     entrypoint: /kota-entrypoint.sh
     volumes:
       - ./mqttwarn/config:/etc/mqttwarn
-      - ./mqttwarn/env-korvaa.py:/env-korvaa.py:ro
+      - ./mqttwarn/lisaa-salaisuudet.py:/lisaa-salaisuudet.py:ro
       - ./mqttwarn/kota-entrypoint.sh:/kota-entrypoint.sh:ro
       - /etc/localtime:/etc/localtime:ro
     secrets:
       - MQTT_PASSWORD
+      - SMTP_USERNAME
+      - SMTP_PASSWORD
+      - SMTP_FROM
+      - SMTP_TO
       - TELEGRAM_CHAT_ID
       - TELEGRAM_TOKEN
     depends_on:
@@ -220,6 +224,14 @@ secrets:
     file: ./secrets/ENTSOE_API_TOKEN
   MQTT_PASSWORD:
     file: ./secrets/MQTT_PASSWORD
+  SMTP_USERNAME:
+    file: ./secrets/SMTP_USERNAME
+  SMTP_PASSWORD:
+    file: ./secrets/SMTP_PASSWORD
+  SMTP_FROM:
+    file: ./secrets/SMTP_FROM
+  SMTP_TO:
+    file: ./secrets/SMTP_TO
   TELEGRAM_CHAT_ID:
     file: ./secrets/TELEGRAM_CHAT_ID
   TELEGRAM_TOKEN:
